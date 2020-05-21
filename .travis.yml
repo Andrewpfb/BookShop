@@ -1,5 +1,4 @@
 language: csharp
-mono: none
 script:
         - dotnet restore
         - dotnet build BookShop.sln -c Release
