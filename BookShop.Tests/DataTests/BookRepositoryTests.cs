@@ -1,4 +1,5 @@
-﻿using BookShop.Data.Intefaces;
+﻿using BookShop.Core.DTO;
+using BookShop.Data.Intefaces;
 using BookShop.Data.Models;
 using Moq;
 using NUnit.Framework;
@@ -21,6 +22,8 @@ namespace BookShop.Tests.DataTests
 
         private IRepository<Book> _bookRepo;
 
+        private Book _newBook = new Book() { Id = 4, Name = "fourth", Description = "book" };
+
         [SetUp]
         public void Setup()
         {
@@ -28,6 +31,9 @@ namespace BookShop.Tests.DataTests
                 .Returns(_booksList[1]);
             _bookRepoMock.Setup(br => br.GetAll())
                 .Returns(_booksList);
+            _bookRepoMock.Setup(br => br.Create(It.IsAny<Book>()))
+                .Callback((Book newBook) => { _booksList.Add(newBook); })
+                .Verifiable();
 
             _bookRepo = _bookRepoMock.Object;
         }
@@ -44,6 +50,15 @@ namespace BookShop.Tests.DataTests
         {
             var result = _bookRepo.GetAll();
             Assert.AreEqual(result, _booksList, "Invalid list");
+        }
+
+        [Test]
+        public void CreateNewBookTest()
+        {
+            int oldBooksCount = _booksList.Count();
+            _bookRepo.Create(_newBook);
+            Assert.IsTrue(_booksList.Count() == ++oldBooksCount, "Count of books doesn't change");
+            Assert.AreEqual(_booksList.Last(),_newBook, "Last book isn't last added");
         }
     }
 }
