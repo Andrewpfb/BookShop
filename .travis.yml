@@ -3,5 +3,4 @@ script:
         - dotnet restore
         - dotnet build BookShop.sln -c Release
         - dotnet test -c Release --no-build BookShop.Tests/BookShop.Tests.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
- after_script:
-        - bash <(curl -s https://codecov.io/bash)
+
