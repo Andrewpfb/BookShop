@@ -8,3 +8,4 @@ script:
   - dotnet build
   - dotnet test BookShop.Tests/BookShop.Tests.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
   - bash <(curl -s https://codecov.io/bash)
+
