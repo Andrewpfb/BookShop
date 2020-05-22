@@ -6,4 +6,6 @@ install:
   - dotnet restore
 script:
   - dotnet build
-  - dotnet test BookShop.Tests/BookShop.Tests.csproj
+  - dotnet test BookShop.Tests/BookShop.Tests.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+ after_script:
+  - bash <(curl -s https://codecov.io/bash)
