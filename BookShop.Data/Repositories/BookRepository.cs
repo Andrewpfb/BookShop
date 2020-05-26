@@ -4,6 +4,7 @@ using BookShop.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BookShop.Data.Repositories
 {
@@ -27,7 +28,7 @@ namespace BookShop.Data.Repositories
 
         public IEnumerable<Book> Find(Func<Book, bool> predicate)
         {
-            throw new NotImplementedException();
+            return db.Books.Where(predicate);
         }
 
         public Book Get(int id)
